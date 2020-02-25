@@ -3,6 +3,8 @@ package com.bobocode.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,11 +14,12 @@ import java.time.LocalDateTime;
  * {@link Account} is an entity that is stored in the database table called "accounts". It's primary key is
  * represented by autoincrement column {@code id}.
  */
+@Table("accounts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-// todo: provide entity mapping according to the javadoc
 public class Account {
+    @Id
     private Long id;
     private String firstName;
     private String lastName;
@@ -25,6 +28,3 @@ public class Account {
     private LocalDateTime creationTime;
     private BigDecimal balance = BigDecimal.ZERO.setScale(2);
 }
-
-
-
