@@ -4,7 +4,9 @@ import com.bobocode.entity.Account;
 import com.bobocode.exception.AccountNotFoundException;
 import com.bobocode.repo.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,15 +18,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AccountService {
+    @Autowired
     private final AccountRepository accountRepository;
 
     /**
      * Stores account to the database and sets a generated id.
      *
-     * @param account
+     * @param account A user account
      */
     public void saveAccount(Account account) {
-        throw new UnsupportedOperationException("The task is NOT FINISHED"); // todo: implement according to the javadoc
+        accountRepository.save(account);
     }
 
     /**
@@ -34,7 +37,7 @@ public class AccountService {
      * @return found account
      */
     public Account getAccountById(Long id) {
-        throw new UnsupportedOperationException("The task is NOT FINISHED"); // todo: implement according to the javadoc
+        return accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("account not found"));
     }
 
     /**
@@ -43,7 +46,7 @@ public class AccountService {
      * @return a list of all accounts
      */
     public List<Account> getAllAccounts() {
-        throw new UnsupportedOperationException("The task is NOT FINISHED"); // todo: implement according to the javadoc
+        return accountRepository.findAll();
     }
 
     /**
@@ -54,7 +57,7 @@ public class AccountService {
      * @return a list of accounts that has a given lastName
      */
     public List<Account> findAllByLastName(String lastName) {
-        throw new UnsupportedOperationException("The task is NOT FINISHED"); // todo: implement according to the javadoc
+        return accountRepository.findAccountsByLastName(lastName);
     }
 
     /**
@@ -63,7 +66,7 @@ public class AccountService {
      * @param account that should be updated in the DB
      */
     public void updateAccount(Account account) {
-        throw new UnsupportedOperationException("The task is not FINISHED"); // todo: implement according to the javadoc
+        accountRepository.save(account);
     }
 
     /**
@@ -72,7 +75,7 @@ public class AccountService {
      * @param id of an account that should be removed from the DB
      */
     public void removeAccountById(Long id) {
-        throw new UnsupportedOperationException("The task is NOT FINISHED"); // todo: implement according to the javadoc
+        accountRepository.delete(getAccountById(id));
     }
 
     /**
@@ -82,8 +85,9 @@ public class AccountService {
      * @param bonusAmount a value that should be added to account balances
      * @param lastName    of accounts that should receive a bonus
      */
+    @Transactional
     public void bonusEveryoneByLastName(BigDecimal bonusAmount, String lastName) {
-        throw new UnsupportedOperationException("The task is NOT FINISHED"); // todo: finish impl using bonusAccount()
+        findAllByLastName(lastName).forEach(acc -> bonusAccount(acc, bonusAmount));
     }
 
     private void bonusAccount(Account account, BigDecimal bonus) {

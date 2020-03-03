@@ -10,6 +10,9 @@ To verify your configuration, run `AccountServiceTest`
  
 ### Pre-conditions :heavy_exclamation_mark:
 You're supposed to be familiar with *Spring Boot* and *Spring Data*
+* Java 11 sdk 
+* Maven
+* Lombok plugin
 
 ### How to start :question:
 * Just clone the repository and start implementing the **todo** section, verify your changes by running tests
